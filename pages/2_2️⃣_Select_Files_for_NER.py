@@ -33,9 +33,9 @@ def nav_page(page_name, timeout_secs=3):
 selected_files = []
 
 # Setzt den Header der Seite
-st.header("2️⃣ Dateien für weitere Anonymisierung")
+st.header("2️⃣ Dateien für weitere Pseudonymisierung")
 # Schreibt eine Beschreibung für den Benutzer
-st.write("Bitte wähle alle Dateien aus, welche weitere Anonymisierungsmaßnahmen erfordern.")
+st.write("Bitte wähle alle Dateien aus, welche weitere Pseudonymisierungsmaßnahmen erfordern.")
 
 # Überprüft, ob es Dateien für den Bot gibt
 if not st.session_state.files_for_bot:
@@ -47,7 +47,7 @@ if not st.session_state.files_for_bot:
 
 # Überprüft, ob es Dateien für den Bot gibt
 if st.session_state.files_for_bot:
-    # Ermöglicht die Auswahl von Dateien für die Anonymisierung
+    # Ermöglicht die Auswahl von Dateien für die Pseudonymisierung
     selected_files = st.multiselect("Dateien auswählen:", st.session_state.files_for_bot, default=st.session_state.get('files_for_ner', []))
     # Speichert die ausgewählten Dateien im Session-State
     st.session_state.files_for_ner = selected_files  
@@ -58,4 +58,4 @@ if not selected_files:
 else:
     # Fügt einen Button hinzu, um zur nächsten Seite zu navigieren
     if st.button("Weiter"):
-        nav_page("File_Anonymization")
+        nav_page("File_Pseudonymization")

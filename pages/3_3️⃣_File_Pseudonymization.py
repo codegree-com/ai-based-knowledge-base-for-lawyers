@@ -48,7 +48,7 @@ email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 ### ENDE REGEX ###
 
 ### NER Anpassung ####
-# Lade das Sprachmodell
+# Spacy Sprachmodell laden
 nlp = spacy.load("de_core_news_lg")
 
 # Aktualisiere das Labels-Schema des Modells, um das neue "IBAN"-Label einzuschließen
@@ -119,7 +119,6 @@ def anonymize_data():
             for page_number in range(len(reader.pages)):
                 text += reader.pages[page_number].extract_text()
             file_texts[file_path] = text
-            text += "mein E-Mail adresse ist perica.glavas@web.de test@rest.de oder alternativ kumpel@rumpel.de und meine IBAN lautet DE75512108001245126199 oder BA393385804800211234 oder AT483200000012345864"
 
         doc = nlp(text)
 
@@ -173,13 +172,13 @@ def anonymize_data():
         with open(json_file_path, 'w') as file:
             json.dump(original_and_fake_entities, file, ensure_ascii=False)
 
-        # Erstelle eine Liste von Dateien, die nicht anonymisiert wurden, indem du die Dateien filterst, die nicht in 'files_for_ner' sind, aus 'files_for_bot'
+        # Erstelle eine Liste von Dateien, die nicht pseudonymisiert wurden, indem du die Dateien filterst, die nicht in 'files_for_ner' sind, aus 'files_for_bot'
         unanonimized_files = list(filter(lambda x: x not in st.session_state.files_for_ner, st.session_state.files_for_bot))
 
-        # Erstelle eine Liste von modifizierten Namen für die anonymisierten Dateien, indem du die Session-ID und den Dateinamen zusammenfügst
+        # Erstelle eine Liste von modifizierten Namen für die pseudonymisiert Dateien, indem du die Session-ID und den Dateinamen zusammenfügst
         modified_names = [str(st.session_state.session_id)+'_'+anon_file+'.txt' for anon_file in st.session_state.files_for_ner]
         
-        # Erstelle eine Liste von Dateipfaden, indem du den Ordnerpfad "files" mit den Dateinamen der nicht anonymisierten und anonymisierten Dateien zusammenfügst
+        # Erstelle eine Liste von Dateipfaden, indem du den Ordnerpfad "files" mit den Dateinamen der nicht pseudonymisierten und pseudonymisierten Dateien zusammenfügst
         files_input = [os.path.join("files", filename) for filename in unanonimized_files+modified_names]
         
         # Definiere den Namen das zu verwendenden LLM-Modells
@@ -196,13 +195,13 @@ def anonymize_data():
 ner_categories = []
 
 # Setze den Header der Seite
-st.header("3️⃣ NER Vorschau: Datei-Anonymisierung")
+st.header("3️⃣ NER Vorschau: Datei-Pseudonymisierung")
 
 # Schreibe eine Beschreibung für die Streamlit-Seite
-st.write("Bitte wähle aus, welche Art an sensiblen Daten anonymisiert werden sollen. Falls keine anonymisiert werden sollen, so kannst du direkt auf 'Chabot erstellen' drücken. Direkt unter der Auswahl findest du eine Vorschau der einzelnen Dateien mit den jeweiligen Entitäten.")
+st.write("Bitte wähle aus, welche Art an sensiblen Daten pseudonymisiert werden sollen. Falls keine pseudonymisiert werden sollen, so kannst du direkt auf 'Chabot erstellen' drücken. Direkt unter der Auswahl findest du eine Vorschau der einzelnen Dateien mit den jeweiligen Entitäten.")
 
-# Lasse den Benutzer auswählen, welche Kategorien von Daten anonymisiert werden sollen
-selected_categories = st.multiselect("Folgende sensible Daten sollen anonymisiert werden:", ["Personen", "IBAN", "E-Mail-Adressen"])
+# Lasse den Benutzer auswählen, welche Kategorien von Daten pseudonymisiert werden sollen
+selected_categories = st.multiselect("Folgende sensible Daten sollen pseudonymisiert werden:", ["Personen", "IBAN", "E-Mail-Adressen"])
 
 # Überprüfe, ob keine Option ausgewählt ist und zeige eine Warnung an
 if not selected_categories:
@@ -218,8 +217,8 @@ if 'button_clicked' not in st.session_state:
 
 # Füge dies dort hinzu, wo der Button erscheinen soll
 if not st.session_state.button_clicked and selected_categories:
-    if st.button('Schritt 1: Daten anonymisieren'):
-        # Führe die Funktion zur Datenanonymisierung aus, wenn der Button geklickt wird
+    if st.button('Schritt 1: Daten pseudonymisieren'):
+        # Führe die Funktion zur Datenpseudonymisiert aus, wenn der Button geklickt wird
         anonymize_data()
         # Setze den Status des Buttons auf "geklickt"
         st.session_state.button_clicked = True

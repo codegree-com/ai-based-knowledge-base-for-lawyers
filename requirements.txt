@@ -1,0 +1,12 @@
+streamlit
+os
+json
+spacy
+spacy-streamlit
+PyPDF2
+re
+faker
+uuid
+openai
+shutil
+llama_index

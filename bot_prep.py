@@ -11,7 +11,7 @@ from llama_index.text_splitter import TokenTextSplitter
 from llama_index.indices.prompt_helper import PromptHelper
 
 # API-Key für OPENAI setzen
-openai.api_key = "NEEDTOSET"
+openai.api_key = "SET_OPENAI_KEYS"
 
 # Individuelle Pagination für Multistep-Apps, von: https://github.com/streamlit/streamlit/issues/4832
 def nav_page(page_name, timeout_secs=3):
