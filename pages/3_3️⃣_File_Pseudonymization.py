@@ -42,7 +42,7 @@ fake = Faker(['de_DE'])
 
 ### REGEX DEFINITION ###
 # Definiere das benutzerdefinierte Regex-Muster für IBAN
-iban_pattern = r'\b[A-Z]{2}[0-9]{2}(?:\s?[A-Z0-9]{4}){1,7}\b'
+iban_pattern = r'\b[A-Z]{2}[0-9]{2}(?:\s?[A-Z0-9]{4})*(?:\s?[A-Z0-9]{1,3})?\b'
 # Definiere das benutzerdefinierte Regex-Muster für E-Mails
 email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 ### ENDE REGEX ###
@@ -237,8 +237,6 @@ for file_path in selected_files:
         for page_number in range(len(reader.pages)):
             text += reader.pages[page_number].extract_text()
         file_texts[file_path] = text
-        # Füge zusätzlichen Text hinzu (dies scheint nur für Testzwecke zu sein)
-        text += "mein E-Mail adresse ist perica.glavas@web.de test@rest.de oder alternativ kumpel@rumpel.de und meine IBAN lautet DE75512108001245126199 oder BA393385804800211234 oder AT483200000012345864"
 
     # Verarbeite den Text mit dem NLP-Modell
     doc = nlp(text)
